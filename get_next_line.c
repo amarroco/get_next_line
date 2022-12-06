@@ -6,102 +6,102 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/03 14:33:56 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/06 03:45:07 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *s)
+#include "get_next_line.h"
+
+int	ft_strchr(char *s, int c)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return (i);
 		i++;
-	return (i);
+	}
+	return (-1);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	char	*ptr;
-
-	ptr = (char *)s;
-	while (*ptr)
-	{
-		if (*ptr == (char)c)
-			return (ptr);
-		ptr++;
-	}
-	if (c == 0)
-	{
-		return (ptr);
-	}
-	return (NULL);
-}
-
-char	*ft_calloc(int nmemb)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*d;
 
-	if (nmemb < 1 || nmemb > 2147483647)
-	{
-		return (NULL);
-	}
-	d = (char *)malloc(nmemb);
+	d = ft_strjoin(s1, s2);
 	if (!d)
 		return (NULL);
-	while (nmemb--)
-		d[nmemb] = 0;
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
 	return (d);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_next_line(char *mem, char *buf, int i)
 {
 	char	*d;
-	size_t	len;
-	size_t	i;
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1 && s2)
-		return ((char *)s2);
-	if (!s2 && s1)
-		return ((char *)s1);
-	len = 0;
-	i = 0;
-	d = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!d)
-		return (NULL);
-	while (s1[len])
+	if (i < 0)
 	{
-		d[len] = s1[len];
-		len++;
+		if (!mem)
+			return (NULL);
+		d = ft_strdup(mem);
+		free(mem);
 	}
-	while (s2[i])
-		d[len++] = s2[i++];
+	if (i >= 0)
+	{
+		d = ft_strjoin_free(mem, ft_substr(buf, 0, ft_strchr(buf, '\n') + 1));
+		if (!d)
+			return (NULL);
+	}
+	return (d);
+}
+
+char	*ft_get_memory(char *mem, char *buf, int i)
+{
+	char	*d;
+
+	if (ft_strlen(buf) - 1 == ft_strchr(buf, '\n'))
+		return (NULL);
+	if (i > 0)
+	{
+		d = ft_substr(buf, i, ft_strlen(buf) - i);
+		if (!d)
+			return (NULL);
+	}
+	else
+	{
+		d = ft_strjoin(mem, buf);
+		if (!d)
+			return (NULL);
+		free(mem);
+	}
 	return (d);
 }
 
 char	*get_next_line(int fd)
 {
-	static char *mem;
-	char *buffer;
-	char *d;
-	int i;
+	static char	*mem;
+	char		*buf;
+	char		*d;
+	int			i;
 
-	if (!mem)
-		mem = ft_calloc(BUFFER_SIZE);
-	if (!mem)
-		return (NULL);
-	while (read(fd, buffer, BUFFER_SIZE) == BUFFER_SIZE)
+	i = read(fd, buf, BUFFER_SIZE);
+	if (ft_strchr(buf, '\n') != -1)
 	{
-		i = 0;
-		while (i < BUFFER_SIZE)
-		{
-			if (buffer[i] == '\n')
-			{
-				d = mem;
-			}
-		}
+		d = ft_next_line(mem, buf, i);
+		if (!d)
+			return (NULL);
+	}
+	mem = ft_get_memory(mem, buf, ft_strchr(buf, '\n') + 1);
+	if (ft_strchr(buf, '\n') == -1)
+	{
+		d = get_next_line(fd);
+		if (!d)
+			return (NULL);
 	}
 	return (d);
 }
