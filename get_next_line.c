@@ -6,7 +6,7 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/06 03:45:07 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/06 05:54:24 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,6 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	return (d);
 }
 
-char	*ft_next_line(char *mem, char *buf, int i)
-{
-	char	*d;
-
-	if (i < 0)
-	{
-		if (!mem)
-			return (NULL);
-		d = ft_strdup(mem);
-		free(mem);
-	}
-	if (i >= 0)
-	{
-		d = ft_strjoin_free(mem, ft_substr(buf, 0, ft_strchr(buf, '\n') + 1));
-		if (!d)
-			return (NULL);
-	}
-	return (d);
-}
-
 char	*ft_get_memory(char *mem, char *buf, int i)
 {
 	char	*d;
@@ -82,6 +62,26 @@ char	*ft_get_memory(char *mem, char *buf, int i)
 	return (d);
 }
 
+char	*ft_return_next_line(char *mem, char *buf, int i)
+{
+	char	*d;
+
+	if (i < 0)
+	{
+		d = ft_strdup(mem);
+		if (!d)
+			return (NULL);
+		free(mem);
+	}
+	if (i >= 0)
+	{
+		d = ft_strjoin_free(mem, ft_substr(buf, 0, ft_strchr(buf, '\n') + 1));
+		if (!d)
+			return (NULL);
+	}
+	return (d);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*mem;
@@ -92,7 +92,7 @@ char	*get_next_line(int fd)
 	i = read(fd, buf, BUFFER_SIZE);
 	if (ft_strchr(buf, '\n') != -1)
 	{
-		d = ft_next_line(mem, buf, i);
+		d = ft_return_next_line(mem, buf, i);
 		if (!d)
 			return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/06 03:44:57 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/06 05:54:23 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*ft_calloc(int nmemb)
 {
 	char	*d;
 
-	if (nmemb < 1 || nmemb > 2147483647)
+	if (nmemb < 1)
 	{
-		return (NULL);
+		return (malloc(0));
 	}
 	d = (char *)malloc(nmemb);
 	if (!d)
@@ -43,6 +43,8 @@ char	*ft_strdup(char *s)
 	char	*d;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	d = (char *)ft_calloc(ft_strlen(s) + 1);
 	if (!d)
 		return (NULL);
@@ -58,10 +60,8 @@ char	*ft_substr(char *s, unsigned int start, int len)
 	int		i;
 
 	i = 0;
-	if (!s || start > ft_strlen(s))
+	if (!s)
 		return (NULL);
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
 	d = (char *)ft_calloc(len + 1);
 	if (!d)
 		return (NULL);

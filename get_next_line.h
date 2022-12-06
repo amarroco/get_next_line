@@ -6,12 +6,12 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 03:38:58 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/06 03:40:50 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/06 05:54:25 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # include <stdlib.h>
 
@@ -22,7 +22,7 @@ char	*ft_substr(char *s, unsigned int start, int len);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strchr(char *s, int c);
 char	*ft_strjoin_free(char *s1, char *s2);
-char	*ft_next_line(char *mem, char *buf, int i);
+char	*ft_return_next_line(char *mem, char *buf, int i);
 char	*ft_get_memory(char *mem, char *buf, int i);
 char	*get_next_line(int fd);
 
