@@ -6,7 +6,7 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/06 05:54:23 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/11 04:16:21 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,36 @@ char	*ft_calloc(int nmemb)
 	return (d);
 }
 
-char	*ft_strdup(char *s)
+int	ft_strchr(char *s, int c)
 {
-	char	*d;
-	int		i;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	d = (char *)ft_calloc(ft_strlen(s) + 1);
-	if (!d)
-		return (NULL);
 	i = 0;
-	while (s[i++])
-		d[i - 1] = s[i - 1];
-	return (d);
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
-char	*ft_substr(char *s, unsigned int start, int len)
+char	*ft_substr(char *s, int start, int len)
 {
 	char	*d;
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!s)
 		return (NULL);
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	if (start > ft_strlen(s))
+		len = 0;
 	d = (char *)ft_calloc(len + 1);
 	if (!d)
 		return (NULL);
-	while (i < len && start < ft_strlen(s))
+	while (i < len && start < ft_strlen(s) + 1)
 		d[i++] = s[start++];
 	return (d);
 }

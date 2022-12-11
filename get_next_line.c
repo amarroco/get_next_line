@@ -6,24 +6,22 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/06 05:54:24 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/11 05:01:30 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr(char *s, int c)
+char	*ft_substr_free(char *s, int start, int len);
 {
-	int	i;
+	char	*d;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return (i);
-		i++;
-	}
-	return (-1);
+	d = ft_substr(s, start, len);
+	if (!d)
+		return (NULL);
+	if (s)
+		free(s);
+	return (d);
 }
 
 char	*ft_strjoin_free(char *s1, char *s2)
@@ -35,73 +33,33 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		return (NULL);
 	if (s1)
 		free(s1);
-	if (s2)
-		free(s2);
-	return (d);
-}
-
-char	*ft_get_memory(char *mem, char *buf, int i)
-{
-	char	*d;
-
-	if (ft_strlen(buf) - 1 == ft_strchr(buf, '\n'))
-		return (NULL);
-	if (i > 0)
-	{
-		d = ft_substr(buf, i, ft_strlen(buf) - i);
-		if (!d)
-			return (NULL);
-	}
-	else
-	{
-		d = ft_strjoin(mem, buf);
-		if (!d)
-			return (NULL);
-		free(mem);
-	}
-	return (d);
-}
-
-char	*ft_return_next_line(char *mem, char *buf, int i)
-{
-	char	*d;
-
-	if (i < 0)
-	{
-		d = ft_strdup(mem);
-		if (!d)
-			return (NULL);
-		free(mem);
-	}
-	if (i >= 0)
-	{
-		d = ft_strjoin_free(mem, ft_substr(buf, 0, ft_strchr(buf, '\n') + 1));
-		if (!d)
-			return (NULL);
-	}
 	return (d);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*mem;
-	char		*buf;
+	static char	*m;
+	char		*b;
 	char		*d;
-	int			i;
 
-	i = read(fd, buf, BUFFER_SIZE);
-	if (ft_strchr(buf, '\n') != -1)
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
+	b[BUFFER_SIZE] = 0;
+	while (ft_strchr(m, '\n') == -1 && read(fd, b, BUFFER_SIZE) >= 0)
 	{
-		d = ft_return_next_line(mem, buf, i);
-		if (!d)
+		m = ft_strjoin_free(m, b);
+		if (!m)
 			return (NULL);
 	}
-	mem = ft_get_memory(mem, buf, ft_strchr(buf, '\n') + 1);
-	if (ft_strchr(buf, '\n') == -1)
+	if (ft_strchr(m, '\n') >= 0)
 	{
-		d = get_next_line(fd);
+		d = ft_substr(m, 0, ft_strchr(m, '\n'));
 		if (!d)
 			return (NULL);
+		m = ft_substr_free(m, ft_strchr(m, '\n') + 1, ft_strlen(m));
+		if (!m)
+			return (NULL);
+		return (d);
 	}
-	return (d);
+	return ((char *)m );
 }
