@@ -6,13 +6,13 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/11 05:01:30 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/11 05:10:26 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_substr_free(char *s, int start, int len);
+char	*ft_substr_free(char *s, int start, int len)
 {
 	char	*d;
 
@@ -61,5 +61,5 @@ char	*get_next_line(int fd)
 			return (NULL);
 		return (d);
 	}
-	return ((char *)m );
+	return ((char *)m);
 }

@@ -6,7 +6,7 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/11 04:16:21 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/11 05:10:36 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_strchr(char *s, int c)
 char	*ft_substr(char *s, int start, int len)
 {
 	char	*d;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!s)
