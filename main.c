@@ -6,19 +6,25 @@
 /*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 10:20:14 by amarroco          #+#    #+#             */
-/*   Updated: 2022/12/11 05:11:40 by amarroco         ###   ########.fr       */
+/*   Updated: 2022/12/21 04:35:46 by amarroco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-int	main(void)
+int main()
 {
-	int	fd;
-
-	fd = open("file", O_RDONLY);
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
+  char	*test;
+  int	fd;
+  
+  fd = open("text.txt", O_RDONLY);
+  printf("fd : %i\n", fd);
+  test = get_next_line(fd);
+  while (test)
+  {  
+      printf("ligne : %s", test);
+      free(test);
+      test = get_next_line(fd);
+  }
+  close(fd);
 }
