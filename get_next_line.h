@@ -20,12 +20,10 @@
 
 int		ft_strlen(char *s);
 int		ft_strchr(char *s, int c);
+void	ft_bzero(char *s, int n);
 char	*ft_calloc(int nmemb);
-char	*ft_substr(char *s, int start, int len);
 char	*ft_strjoin(char *s1, char *s2);
-void    ft_read(int fd, char **m);
-char	*ft_substr_free(char *s, int start, int len);
-char	*ft_strjoin_free(char *s1, char *s2);
+
 char	*get_next_line(int fd);
 
 #endif

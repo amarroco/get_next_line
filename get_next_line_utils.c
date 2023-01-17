@@ -36,6 +36,14 @@ int	ft_strchr(char *s, int c)
 	return (-1);
 }
 
+void	ft_bzero(char *s, int n)
+{
+	while (n--)
+	{
+		s[n] = 0;
+	}
+}
+
 char	*ft_calloc(int nmemb)
 {
 	char	*d;
@@ -47,28 +55,7 @@ char	*ft_calloc(int nmemb)
 	d = (char *)malloc(nmemb);
 	if (!d)
 		return (NULL);
-	while (nmemb--)
-		d[nmemb] = 0;
-	return (d);
-}
-
-char	*ft_substr(char *s, int start, int len)
-{
-	char	*d;
-	int		i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	if (start > ft_strlen(s))
-		len = 0;
-	d = (char *)ft_calloc(len + 1);
-	if (!d)
-		return (NULL);
-	while (i < len && start < ft_strlen(s) + 1)
-		d[i++] = s[start++];
+	ft_bzero(d,	nmemb);
 	return (d);
 }
 

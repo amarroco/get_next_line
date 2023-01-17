@@ -18,9 +18,8 @@ int main()
   int	fd;
   
   fd = open("text.txt", O_RDONLY);
-  printf("fd : %i\n", fd);
   test = get_next_line(fd);
-  while (test)
+  while (test != NULL)
   {  
       printf("ligne : %s", test);
       free(test);
