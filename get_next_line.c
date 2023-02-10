@@ -22,7 +22,6 @@ char	*ft_strjoin_free(char *mem, char *buf)
 	return (temp);
 }
 
-
 char	*ft_next(char *mem)
 {
 	int		i;
@@ -30,13 +29,13 @@ char	*ft_next(char *mem)
 	char	*dst;
 
 	i = 0;
-	while (mem[i] && mem[i] != '\n')
-		i++;
-	if (!mem[i])
+	if (ft_strchr(mem, '\n') == -1)
 	{
 		free(mem);
 		return (NULL);
 	}
+	else
+		i = ft_strchr(mem, '\n');
 	dst = ft_calloc((ft_strlen(mem) - i + 1));
 	i++;
 	j = 0;
@@ -54,8 +53,10 @@ char	*ft_line(char *mem)
 	i = 0;
 	if (!*mem)
 		return (NULL);
-	while (mem[i] && mem[i] != '\n')
-		i++;
+	if (ft_strchr(mem, '\n') != -1)
+		i = ft_strchr(mem, '\n');
+	else
+		i = ft_strlen(mem);
 	dst = ft_calloc(i + 2);
 	i = 0;
 	while (mem[i] && mem[i] != '\n')
