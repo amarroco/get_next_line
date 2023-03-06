@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amarroco <amarroco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alexie <alexie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 13:27:22 by amarroco          #+#    #+#             */
-/*   Updated: 2023/01/13 20:55:25 by amarroco         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:59:11 by alexie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ char	*ft_read(int fd, char *mem)
 
 char	*get_next_line(int fd)
 {
-	static char	*mem;
+	static char	**mem;
 	char		*d;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	mem = ft_read(fd, mem);
-	if (!mem)
+	mem[fd] = ft_read(fd, mem[fd]);
+	if (!mem[fd])
 		return (NULL);
-	d = ft_line(mem);
-	mem = ft_next(mem);
+	d = ft_line(mem[fd]);
+	mem = ft_next(mem[fd]);
 	return (d);
 }
